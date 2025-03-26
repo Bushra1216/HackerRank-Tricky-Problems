@@ -3,14 +3,14 @@
 
 
 
-  with cte as(
-          select measurement_time,
+ with cte as(
+      select measurement_time,
               cast(measurement_time as date) as measurement_day, 
               measurement_value, 
               ROW_NUMBER() over(partition by CAST(measurement_time as date) order by measurement_time asc) as rnk
-         from measurements
+      from measurements
   ),
-  cte1 as(
+ cte1 as(
      select measurement_day,
             sum(measurement_value) as odd_sum 
      from cte
